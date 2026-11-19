@@ -457,6 +457,51 @@ class manager {
     }
 
     /**
+     * Rich label for a session choice. The text is escaped; the markup is not.
+     *
+     * @param \stdClass $session
+     * @param int|null $left
+     * @param bool $open
+     * @return string
+     */
+    public static function session_choice_html(\stdClass $session, ?int $left, bool $open): string {
+        $when = self::format_range((int) $session->timestart, (int) ($session->timeend ?? 0));
+        $name = trim($session->name ?? '');
+        $location = trim($session->location ?? '');
+
+        if (!$open) {
+            $statustext = get_string('sessionclosed', 'local_eventbooking');
+            $statusclass = 'badge badge-secondary';
+        } else if ($left === null) {
+            $statustext = get_string('unlimited', 'local_eventbooking');
+            $statusclass = 'badge badge-light border';
+        } else if ($left <= 0) {
+            $statustext = get_string('full', 'local_eventbooking');
+            $statusclass = 'badge badge-danger';
+        } else {
+            $statustext = get_string('seatsleft', 'local_eventbooking', $left);
+            $statusclass = 'badge badge-primary';
+        }
+
+        $html = \html_writer::start_span('local-eventbooking-choice');
+        if ($name !== '' && $name !== $when) {
+            $html .= \html_writer::span(s($name), 'local-eventbooking-choice-name');
+        }
+        $html .= \html_writer::tag('span', s($when), [
+            'class' => 'local-eventbooking-choice-when text-muted',
+            'dir' => 'ltr',
+        ]);
+        $html .= \html_writer::start_span('local-eventbooking-choice-meta');
+        if ($location !== '') {
+            $html .= \html_writer::span(s($location), 'local-eventbooking-choice-location text-muted');
+        }
+        $html .= \html_writer::span(s($statustext), $statusclass);
+        $html .= \html_writer::end_span();
+        $html .= \html_writer::end_span();
+        return $html;
+    }
+
+    /**
      * @param int $eventid
      * @param int $userid
      * @return \stdClass|null
@@ -807,12 +852,30 @@ class manager {
             (int) $event->id
         );
         $gallery = array_values($images);
+        $sessions = self::get_sessions((int) $event->id);
+        $summary = self::present_event($event, $sessions, self::count_active((int) $event->id));
+        $locations = [];
+        foreach ($sessions as $session) {
+            $location = trim($session->location ?? '');
+            if ($location !== '' && !in_array($location, $locations, true)) {
+                $locations[] = $location;
+            }
+        }
+        $dates = $summary['dates'];
+        if ($dates === get_string('nodates', 'local_eventbooking')) {
+            $dates = '';
+        }
         return [
             'banner' => $banner,
             'hasgallery' => !empty($gallery),
             'gallery' => $gallery,
             'intro' => $intro,
             'marketing' => $marketing,
+            'badge' => $summary['badge'],
+            'badgeclass' => $summary['badgeclass'],
+            'dates' => $dates,
+            'haslocations' => !empty($locations),
+            'locations' => array_map(static fn(string $name): array => ['name' => $name], $locations),
         ];
     }
 

@@ -118,6 +118,7 @@ if ($showform) {
 
 $renderer = $PAGE->get_renderer('local_eventbooking');
 echo $OUTPUT->header();
+echo html_writer::start_div('local-eventbooking-page');
 
 if ($canmanage) {
     echo $renderer->event_tabs($id, 'view');
@@ -145,13 +146,15 @@ if ($current) {
         echo html_writer::div(nl2br(s($event->confirmation)), 'alert alert-info');
     }
     if ($showform) {
-        echo html_writer::div(get_string('changehint', 'local_eventbooking'), 'mb-3');
+        echo html_writer::div(get_string('changehint', 'local_eventbooking'), 'local-eventbooking-changehint text-muted mb-3');
     }
 }
 
 if ($showform) {
-    echo html_writer::start_div('local-eventbooking-sessions');
+    echo html_writer::start_div('local-eventbooking-sessions card mb-3');
+    echo html_writer::start_div('card-body');
     $form->display();
+    echo html_writer::end_div();
     echo html_writer::end_div();
 } else if ($sessions) {
     if ((int) $event->visible && !$current && !(int) $event->registrationopen) {
@@ -159,17 +162,22 @@ if ($showform) {
     } else if ((int) $event->visible && !$current && !$selectable) {
         echo $OUTPUT->notification(get_string('eventfull', 'local_eventbooking'), 'warning');
     }
-    echo html_writer::start_tag('ul', ['class' => 'list-unstyled']);
+    echo html_writer::start_div('card local-eventbooking-sessionlist mb-3');
+    echo html_writer::start_div('list-group list-group-flush');
     foreach ($sessions as $session) {
         $left = manager::seats_left($event, $session);
         $open = manager::session_is_open($event, $session);
-        echo html_writer::tag('li', s(manager::session_choice_label($session, $left, $open)), ['class' => 'mb-2']);
+        echo html_writer::div(
+            manager::session_choice_html($session, $left, $open),
+            'list-group-item'
+        );
     }
-    echo html_writer::end_tag('ul');
+    echo html_writer::end_div();
+    echo html_writer::end_div();
 }
 
 if ($current && (int) $event->allowcancel) {
-    echo html_writer::start_tag('form', ['method' => 'post', 'action' => $url, 'class' => 'mt-3']);
+    echo html_writer::start_tag('form', ['method' => 'post', 'action' => $url, 'class' => 'local-eventbooking-cancel']);
     echo html_writer::empty_tag('input', ['type' => 'hidden', 'name' => 'sesskey', 'value' => sesskey()]);
     echo html_writer::empty_tag('input', ['type' => 'hidden', 'name' => 'action', 'value' => 'cancel']);
     echo html_writer::empty_tag('input', [
@@ -181,8 +189,13 @@ if ($current && (int) $event->allowcancel) {
 }
 
 echo html_writer::div(
-    html_writer::link(new moodle_url('/local/eventbooking/index.php'), get_string('backtoevents', 'local_eventbooking')),
-    'mt-4'
+    html_writer::link(
+        new moodle_url('/local/eventbooking/index.php'),
+        get_string('backtoevents', 'local_eventbooking'),
+        ['class' => 'btn btn-link px-0']
+    ),
+    'local-eventbooking-back'
 );
 
+echo html_writer::end_div();
 echo $OUTPUT->footer();

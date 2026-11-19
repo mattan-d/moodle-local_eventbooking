@@ -1,18 +1,35 @@
-<div class="local-eventbooking-hero mb-4">
+<div class="card local-eventbooking-hero mb-4">
     {{#banner}}
-    <img class="local-eventbooking-banner img-fluid" src="{{url}}" alt="{{alt}}">
-    {{/banner}}
-    {{#hasgallery}}
-    <div class="local-eventbooking-gallery">
-        {{#gallery}}
-        <img src="{{url}}" alt="{{alt}}">
-        {{/gallery}}
+    <div class="local-eventbooking-bannerwrap">
+        <img class="local-eventbooking-banner" src="{{url}}" alt="{{alt}}">
     </div>
-    {{/hasgallery}}
-    {{#intro}}
-    <div class="local-eventbooking-intro">{{{.}}}</div>
-    {{/intro}}
+    {{/banner}}
+    <div class="card-body">
+        <div class="local-eventbooking-meta">
+            <span class="badge {{badgeclass}}">{{badge}}</span>
+            {{#dates}}
+            <span class="local-eventbooking-meta-item text-muted" dir="ltr">{{dates}}</span>
+            {{/dates}}
+        </div>
+        {{#haslocations}}
+        <div class="local-eventbooking-locations">
+            {{#locations}}
+            <span class="badge badge-light border">{{name}}</span>
+            {{/locations}}
+        </div>
+        {{/haslocations}}
+        {{#hasgallery}}
+        <div class="local-eventbooking-gallery">
+            {{#gallery}}
+            <img src="{{url}}" alt="{{alt}}">
+            {{/gallery}}
+        </div>
+        {{/hasgallery}}
+        {{#intro}}
+        <div class="local-eventbooking-intro">{{{.}}}</div>
+        {{/intro}}
+    </div>
     {{#marketing}}
-    <div class="local-eventbooking-marketing">{{{.}}}</div>
+    <div class="card-body border-top local-eventbooking-marketing">{{{.}}}</div>
     {{/marketing}}
 </div>

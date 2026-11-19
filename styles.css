@@ -14,12 +14,27 @@
     margin-top: 0.25rem;
 }
 
-.local-eventbooking-card-img,
-.local-eventbooking-banner {
+.local-eventbooking-card-img {
     width: 100%;
     max-height: 320px;
     object-fit: cover;
-    background: #eef2f6;
+    background: rgba(127, 127, 127, 0.08);
+}
+
+.local-eventbooking-bannerwrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem 1.5rem;
+    background: rgba(0, 48, 135, 0.04);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.local-eventbooking-banner {
+    width: auto;
+    max-width: 100%;
+    max-height: 120px;
+    object-fit: contain;
 }
 
 .local-eventbooking-card {
@@ -41,11 +56,11 @@
 }
 
 .local-eventbooking-marketing {
-    margin-top: 1.5rem;
-    padding: 1.25rem;
-    border: 1px solid #e3e8ee;
-    border-radius: 0.5rem;
-    background: #fff;
+    margin-top: 0;
+}
+
+.local-eventbooking-marketing > :last-child {
+    margin-bottom: 0;
 }
 
 .local-eventbooking-linkbox .form-control {
@@ -69,4 +84,179 @@
 
 .local-eventbooking-report {
     overflow-x: auto;
+}
+
+.local-eventbooking-page {
+    max-width: 52rem;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.local-eventbooking-hero {
+    overflow: hidden;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.4rem rgba(0, 0, 0, 0.04);
+}
+
+.local-eventbooking-meta,
+.local-eventbooking-locations {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.local-eventbooking-locations {
+    margin-top: 0.75rem;
+}
+
+.local-eventbooking-intro {
+    margin-top: 1rem;
+}
+
+.local-eventbooking-intro > :last-child {
+    margin-bottom: 0;
+}
+
+.local-eventbooking-sessions.card {
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.4rem rgba(0, 0, 0, 0.04);
+}
+
+.local-eventbooking-section {
+    margin-top: 0.25rem;
+    padding-top: 1.15rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.local-eventbooking-section.is-first {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+}
+
+.local-eventbooking-page .mform .fitem > .col-form-label {
+    padding-bottom: 0.2rem;
+}
+
+.local-eventbooking-page .mform .femptylabel > .col-form-label,
+#fgroup_id_sessiongroup > .col-md-3 {
+    display: none !important;
+}
+
+/*rtl:begin:ignore*/
+.local-eventbooking-page #id_email,
+.local-eventbooking-page #id_phone,
+.local-eventbooking-page #id_idnumber {
+    direction: ltr;
+    text-align: left;
+}
+/*rtl:end:ignore*/
+
+.local-eventbooking-page .mform .form-control,
+.local-eventbooking-page .mform textarea {
+    max-width: 36rem;
+}
+
+.local-eventbooking-page #fgroup_id_sessiongroup .felement .d-flex.flex-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+}
+
+.local-eventbooking-page .mform .col-form-label {
+    justify-content: flex-start;
+}
+
+.local-eventbooking-page .mform .form-label-addon {
+    margin-right: 0.35rem;
+    margin-left: 0.35rem;
+}
+
+.local-eventbooking-page #fgroup_id_sessiongroup label.form-check-label {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    margin: 0;
+    padding: 0.85rem 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.5rem;
+    background: transparent;
+    cursor: pointer;
+    gap: 0.75rem;
+}
+
+.local-eventbooking-page #fgroup_id_sessiongroup label.form-check-label:hover {
+    border-color: rgba(0, 0, 0, 0.28);
+}
+
+.local-eventbooking-page #fgroup_id_sessiongroup label.form-check-label:has(input:checked) {
+    border-color: #003087;
+    background: rgba(0, 48, 135, 0.06);
+    box-shadow: inset 0 0 0 1px #003087;
+}
+
+.local-eventbooking-page #fgroup_id_sessiongroup label.form-check-label:has(input:disabled) {
+    cursor: default;
+    opacity: 0.62;
+}
+
+.local-eventbooking-page #fgroup_id_sessiongroup .form-check-input {
+    position: static;
+    flex: 0 0 auto;
+    margin: 0.2rem 0 0;
+}
+
+.local-eventbooking-choice {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.15rem;
+    min-width: 0;
+}
+
+/*rtl:begin:ignore*/
+.local-eventbooking-choice-when,
+.local-eventbooking-meta-item {
+    direction: ltr;
+    unicode-bidi: isolate;
+}
+/*rtl:end:ignore*/
+
+.local-eventbooking-choice-name {
+    font-weight: 600;
+}
+
+.local-eventbooking-choice-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.3rem;
+}
+
+.local-eventbooking-page #fitem_id_submitbutton {
+    margin-bottom: 0;
+}
+
+.local-eventbooking-page #fitem_id_submitbutton .btn-primary {
+    min-width: 9rem;
+    padding-right: 1.25rem;
+    padding-left: 1.25rem;
+}
+
+.local-eventbooking-cancel {
+    margin-top: 0.5rem;
+}
+
+.local-eventbooking-back {
+    margin-top: 0.75rem;
+}
+
+html.centricapp-darkmode .local-eventbooking-page #fgroup_id_sessiongroup label.form-check-label:has(input:checked),
+body.centricapp-darkmode .local-eventbooking-page #fgroup_id_sessiongroup label.form-check-label:has(input:checked) {
+    border-color: #9ec1ff;
+    background: rgba(158, 193, 255, 0.12);
+    box-shadow: inset 0 0 0 1px #9ec1ff;
 }
