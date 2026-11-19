@@ -1,0 +1,72 @@
+.local-eventbooking-stat {
+    border: 0;
+    background: #f6f8fb;
+}
+
+.local-eventbooking-stat-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.local-eventbooking-stat-label {
+    color: #5c6b7a;
+    margin-top: 0.25rem;
+}
+
+.local-eventbooking-card-img,
+.local-eventbooking-banner {
+    width: 100%;
+    max-height: 320px;
+    object-fit: cover;
+    background: #eef2f6;
+}
+
+.local-eventbooking-card {
+    overflow: hidden;
+}
+
+.local-eventbooking-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.local-eventbooking-gallery img {
+    width: 120px;
+    height: 72px;
+    object-fit: cover;
+    border-radius: 0.25rem;
+}
+
+.local-eventbooking-marketing {
+    margin-top: 1.5rem;
+    padding: 1.25rem;
+    border: 1px solid #e3e8ee;
+    border-radius: 0.5rem;
+    background: #fff;
+}
+
+.local-eventbooking-linkbox .form-control {
+    direction: ltr;
+    text-align: left;
+}
+
+.local-eventbooking-sessions .fitemlabel {
+    font-weight: 600;
+}
+
+.local-eventbooking-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+
+.local-eventbooking-actions .btn {
+    white-space: nowrap;
+}
+
+.local-eventbooking-report {
+    overflow-x: auto;
+}

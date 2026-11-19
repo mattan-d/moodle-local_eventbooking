@@ -1,0 +1,18 @@
+<div class="local-eventbooking-hero mb-4">
+    {{#banner}}
+    <img class="local-eventbooking-banner img-fluid" src="{{url}}" alt="{{alt}}">
+    {{/banner}}
+    {{#hasgallery}}
+    <div class="local-eventbooking-gallery">
+        {{#gallery}}
+        <img src="{{url}}" alt="{{alt}}">
+        {{/gallery}}
+    </div>
+    {{/hasgallery}}
+    {{#intro}}
+    <div class="local-eventbooking-intro">{{{.}}}</div>
+    {{/intro}}
+    {{#marketing}}
+    <div class="local-eventbooking-marketing">{{{.}}}</div>
+    {{/marketing}}
+</div>
