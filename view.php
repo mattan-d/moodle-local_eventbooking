@@ -42,11 +42,11 @@ if (!(int) $event->visible && !$canmanage) {
 $url = new moodle_url('/local/eventbooking/view.php', ['id' => $id]);
 $PAGE->set_context($context);
 $PAGE->set_url($url);
-$PAGE->set_pagelayout('standard');
+$PAGE->set_pagelayout('embedded');
+$PAGE->add_body_class('local-eventbooking-view');
+$PAGE->activityheader->disable();
 $PAGE->set_title(format_string($event->name));
-$PAGE->set_heading(format_string($event->name));
-$PAGE->navbar->add(get_string('manageevents', 'local_eventbooking'), new moodle_url('/local/eventbooking/index.php'));
-$PAGE->navbar->add(format_string($event->name));
+$PAGE->set_heading('');
 
 $sessions = manager::get_sessions($id);
 $current = manager::get_active_registration($id, (int) $USER->id);

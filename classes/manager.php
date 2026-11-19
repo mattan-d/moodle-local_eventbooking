@@ -866,6 +866,7 @@ class manager {
             $dates = '';
         }
         return [
+            'name' => $event->name,
             'banner' => $banner,
             'hasgallery' => !empty($gallery),
             'gallery' => $gallery,
