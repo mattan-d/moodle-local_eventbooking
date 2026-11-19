@@ -65,35 +65,26 @@ class register_form extends \moodleform {
                 $disabled ? ['disabled' => 'disabled'] : []
             );
         }
-        $mform->addElement('html', $this->section_heading(get_string('choosesession', 'local_eventbooking'), true));
+        $mform->addElement('html', $this->section_heading(get_string('choosesession', 'local_eventbooking'), 1, true));
         $mform->addGroup($radios, 'sessiongroup', '', '', false);
 
-        $mform->addElement('html', $this->section_heading(get_string('personaldetails', 'local_eventbooking')));
-        $mform->addElement('text', 'firstname', get_string('firstname'), ['size' => 40]);
-        $mform->setType('firstname', \PARAM_TEXT);
-        $mform->addRule('firstname', null, 'required', null, 'client');
-        $mform->addElement('text', 'lastname', get_string('lastname'), ['size' => 40]);
-        $mform->setType('lastname', \PARAM_TEXT);
-        $mform->addRule('lastname', null, 'required', null, 'client');
-        $mform->addElement('text', 'email', get_string('email'), ['size' => 40, 'dir' => 'ltr']);
-        $mform->setType('email', \PARAM_RAW_TRIMMED);
-        $mform->addRule('email', null, 'required', null, 'client');
+        $mform->addElement('html', $this->section_heading(get_string('personaldetails', 'local_eventbooking'), 2));
+        $this->add_text('firstname', get_string('firstname'), 'placeholderfirstname', true);
+        $this->add_text('lastname', get_string('lastname'), 'placeholderlastname', true);
+        $this->add_text('email', get_string('email'), 'placeholderemail', true, ['dir' => 'ltr']);
         $mform->addRule('email', get_string('invalidemail', 'local_eventbooking'), 'email', null, 'client');
-        $mform->addElement('text', 'phone', get_string('phone', 'local_eventbooking'), ['size' => 24, 'dir' => 'ltr']);
-        $mform->setType('phone', \PARAM_TEXT);
-        $mform->addElement('text', 'idnumber', get_string('idnumber'), ['size' => 24, 'dir' => 'ltr']);
-        $mform->setType('idnumber', \PARAM_TEXT);
+        $this->add_text('phone', get_string('phone', 'local_eventbooking'), 'placeholderphone', false, ['dir' => 'ltr']);
+        $this->add_text('idnumber', get_string('idnumber'), 'placeholderidnumber', false, ['dir' => 'ltr']);
 
-        $mform->addElement('html', $this->section_heading(get_string('organisationdetails', 'local_eventbooking')));
-        $mform->addElement('text', 'institution', get_string('institution', 'local_eventbooking'), ['size' => 40]);
-        $mform->setType('institution', \PARAM_TEXT);
-        $mform->addElement('text', 'department', get_string('department', 'local_eventbooking'), ['size' => 40]);
-        $mform->setType('department', \PARAM_TEXT);
-        $mform->addElement('text', 'jobtitle', get_string('jobtitle', 'local_eventbooking'), ['size' => 40]);
-        $mform->setType('jobtitle', \PARAM_TEXT);
-        $mform->addElement('text', 'city', get_string('city', 'local_eventbooking'), ['size' => 40]);
-        $mform->setType('city', \PARAM_TEXT);
-        $mform->addElement('textarea', 'notes', get_string('notes', 'local_eventbooking'), 'rows="3" cols="50"');
+        $mform->addElement('html', $this->section_heading(get_string('organisationdetails', 'local_eventbooking'), 3));
+        $this->add_text('institution', get_string('institution', 'local_eventbooking'), 'placeholderinstitution');
+        $this->add_text('department', get_string('department', 'local_eventbooking'), 'placeholderdepartment');
+        $this->add_text('jobtitle', get_string('jobtitle', 'local_eventbooking'), 'placeholderjobtitle');
+        $this->add_text('city', get_string('city', 'local_eventbooking'), 'placeholdercity');
+        $mform->addElement('textarea', 'notes', get_string('notes', 'local_eventbooking'), [
+            'rows' => 3,
+            'placeholder' => get_string('placeholdernotes', 'local_eventbooking'),
+        ]);
         $mform->setType('notes', \PARAM_TEXT);
 
         $label = $current
@@ -103,15 +94,42 @@ class register_form extends \moodleform {
     }
 
     /**
-     * Plain section title. These replace collapsible form headers on the public page.
+     * Text field with an example placeholder.
+     *
+     * @param string $name
+     * @param string $label
+     * @param string $placeholderkey
+     * @param bool $required
+     * @param array $extra
+     */
+    protected function add_text(
+        string $name,
+        string $label,
+        string $placeholderkey,
+        bool $required = false,
+        array $extra = []
+    ): void {
+        $attributes = ['size' => 40, 'placeholder' => get_string($placeholderkey, 'local_eventbooking')] + $extra;
+        $this->_form->addElement('text', $name, $label, $attributes);
+        $this->_form->setType($name, $name === 'email' ? \PARAM_RAW_TRIMMED : \PARAM_TEXT);
+        if ($required) {
+            $this->_form->addRule($name, null, 'required', null, 'client');
+        }
+    }
+
+    /**
+     * Numbered section title for the registration form.
      *
      * @param string $text
+     * @param int $step
      * @param bool $first
      * @return string
      */
-    protected function section_heading(string $text, bool $first = false): string {
+    protected function section_heading(string $text, int $step, bool $first = false): string {
         $class = 'local-eventbooking-section' . ($first ? ' is-first' : '');
-        return \html_writer::div(\html_writer::tag('h3', s($text), ['class' => 'h5 mb-3']), $class);
+        $badge = \html_writer::span((string) $step, 'local-eventbooking-step');
+        $title = \html_writer::tag('h3', $badge . s($text), ['class' => 'local-eventbooking-sectiontitle']);
+        return \html_writer::div($title, $class);
     }
 
     /**

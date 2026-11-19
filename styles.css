@@ -160,24 +160,97 @@ body.centricapp-darkmode.local-eventbooking-view {
 }
 
 .local-eventbooking-sessions.card {
-    border-radius: 0.5rem;
-    box-shadow: 0 0.125rem 0.4rem rgba(0, 0, 0, 0.04);
+    border: 0;
+    border-radius: 1.1rem;
+    box-shadow: 0 0.75rem 2rem rgba(0, 48, 135, 0.1);
+}
+
+.local-eventbooking-sessions .card-body {
+    padding: 1.35rem 1.35rem 1.15rem;
+}
+
+.local-eventbooking-page .mform {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.85rem 1rem;
+}
+
+.local-eventbooking-page .mform > .local-eventbooking-section,
+.local-eventbooking-page .mform > #fgroup_id_sessiongroup,
+.local-eventbooking-page .mform > #fitem_id_email,
+.local-eventbooking-page .mform > #fitem_id_notes,
+.local-eventbooking-page .mform > #fitem_id_submitbutton,
+.local-eventbooking-page .mform > .fdescription {
+    grid-column: 1 / -1;
+}
+
+.local-eventbooking-page .mform > .fitem,
+.local-eventbooking-page .mform > .fdescription {
+    margin-bottom: 0;
 }
 
 .local-eventbooking-section {
-    margin-top: 0.25rem;
-    padding-top: 1.15rem;
-    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    margin-top: 0.4rem;
+    padding-top: 0.35rem;
 }
 
 .local-eventbooking-section.is-first {
     margin-top: 0;
     padding-top: 0;
-    border-top: 0;
+}
+
+.local-eventbooking-sectiontitle {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin: 0 0 0.15rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.local-eventbooking-step {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: 999px;
+    background: #003087;
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    flex: 0 0 auto;
 }
 
 .local-eventbooking-page .mform .fitem > .col-form-label {
-    padding-bottom: 0.2rem;
+    padding-bottom: 0.35rem;
+}
+
+.local-eventbooking-page .mform .col-form-label label {
+    font-size: 0.84rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
+
+.local-eventbooking-page .mform .form-label-addon .icon {
+    display: none;
+}
+
+.local-eventbooking-page .mform .form-label-addon .text-danger::after {
+    content: "*";
+    color: #c23b3b;
+    font-weight: 700;
+    line-height: 1;
+}
+
+@media (max-width: 640px) {
+    .local-eventbooking-page .mform {
+        grid-template-columns: 1fr;
+    }
+
+    .local-eventbooking-sessions .card-body {
+        padding: 1rem;
+    }
 }
 
 .local-eventbooking-page .mform .femptylabel > .col-form-label,
@@ -196,7 +269,35 @@ body.centricapp-darkmode.local-eventbooking-view {
 
 .local-eventbooking-page .mform .form-control,
 .local-eventbooking-page .mform textarea {
-    max-width: 36rem;
+    width: 100%;
+    max-width: none;
+    min-height: 2.85rem;
+    border: 1px solid rgba(0, 48, 135, 0.16);
+    border-radius: 0.75rem;
+    background: #f5f8fc;
+    padding: 0.7rem 0.95rem;
+    box-shadow: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.local-eventbooking-page .mform textarea.form-control {
+    min-height: 6.5rem;
+    resize: vertical;
+}
+
+.local-eventbooking-page .mform .form-control::placeholder {
+    color: #8b97a8;
+}
+
+.local-eventbooking-page .mform .form-control:hover {
+    border-color: rgba(0, 48, 135, 0.35);
+    background: #fff;
+}
+
+.local-eventbooking-page .mform .form-control:focus {
+    border-color: #003087;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(0, 48, 135, 0.14);
 }
 
 .local-eventbooking-page #fgroup_id_sessiongroup .felement .d-flex.flex-wrap {
@@ -220,12 +321,13 @@ body.centricapp-darkmode.local-eventbooking-view {
     align-items: flex-start;
     width: 100%;
     margin: 0;
-    padding: 0.85rem 1rem;
-    border: 1px solid rgba(0, 0, 0, 0.125);
-    border-radius: 0.5rem;
-    background: transparent;
+    padding: 0.95rem 1.05rem;
+    border: 1px solid rgba(0, 48, 135, 0.14);
+    border-radius: 0.9rem;
+    background: #f8fafc;
     cursor: pointer;
     gap: 0.75rem;
+    transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .local-eventbooking-page #fgroup_id_sessiongroup label.form-check-label:hover {
@@ -246,7 +348,18 @@ body.centricapp-darkmode.local-eventbooking-view {
 .local-eventbooking-page #fgroup_id_sessiongroup .form-check-input {
     position: static;
     flex: 0 0 auto;
+    width: 1.15rem;
+    height: 1.15rem;
     margin: 0.2rem 0 0;
+    appearance: none;
+    border: 2px solid #003087;
+    border-radius: 50%;
+    background: #fff;
+}
+
+.local-eventbooking-page #fgroup_id_sessiongroup label.form-check-label:has(input:checked) .form-check-input {
+    background: #003087;
+    box-shadow: inset 0 0 0 3px #fff;
 }
 
 .local-eventbooking-choice {
@@ -282,9 +395,26 @@ body.centricapp-darkmode.local-eventbooking-view {
 }
 
 .local-eventbooking-page #fitem_id_submitbutton .btn-primary {
-    min-width: 9rem;
-    padding-right: 1.25rem;
-    padding-left: 1.25rem;
+    width: 100%;
+    min-height: 3.05rem;
+    margin-top: 0.35rem;
+    border: 0;
+    border-radius: 0.85rem;
+    background: #003087;
+    font-size: 1.05rem;
+    font-weight: 700;
+    box-shadow: 0 0.55rem 1.2rem rgba(0, 48, 135, 0.24);
+}
+
+.local-eventbooking-page #fitem_id_submitbutton .btn-primary:hover,
+.local-eventbooking-page #fitem_id_submitbutton .btn-primary:focus {
+    background: #00256b;
+}
+
+.local-eventbooking-page .mform .fdescription.required {
+    margin-top: -0.2rem;
+    color: #6c7a89;
+    font-size: 0.82rem;
 }
 
 .local-eventbooking-cancel {
@@ -295,9 +425,22 @@ body.centricapp-darkmode.local-eventbooking-view {
     margin-top: 0.75rem;
 }
 
+html.centricapp-darkmode .local-eventbooking-page #fgroup_id_sessiongroup label.form-check-label,
+body.centricapp-darkmode .local-eventbooking-page #fgroup_id_sessiongroup label.form-check-label {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: #3a4250;
+}
+
 html.centricapp-darkmode .local-eventbooking-page #fgroup_id_sessiongroup label.form-check-label:has(input:checked),
 body.centricapp-darkmode .local-eventbooking-page #fgroup_id_sessiongroup label.form-check-label:has(input:checked) {
     border-color: #9ec1ff;
     background: rgba(158, 193, 255, 0.12);
     box-shadow: inset 0 0 0 1px #9ec1ff;
+}
+
+html.centricapp-darkmode .local-eventbooking-page .mform .form-control,
+body.centricapp-darkmode .local-eventbooking-page .mform .form-control {
+    background: #0e1116 !important;
+    border-color: #3a4250;
+    color: #e8eaed;
 }
