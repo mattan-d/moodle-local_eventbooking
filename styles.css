@@ -116,12 +116,8 @@
 html:has(body.local-eventbooking-view),
 body.local-eventbooking-view {
     min-height: 100%;
-    background-color: #e4e7f4 !important;
-    background-image:
-        radial-gradient(920px 520px at 8% 0%, rgba(43, 53, 143, 0.16), transparent 62%),
-        radial-gradient(760px 460px at 100% 12%, rgba(37, 116, 190, 0.16), transparent 58%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.35), rgba(228, 231, 244, 0.55)),
-        url([[pix:local_eventbooking|backdrop]]) !important;
+    background-color: #e7eaf6 !important;
+    background-image: url([[pix:local_eventbooking|backdrop]]) !important;
     background-position: center top !important;
     background-size: cover !important;
     background-attachment: fixed !important;
@@ -139,12 +135,8 @@ body.local-eventbooking-view .embedded-main {
 html.centricapp-darkmode:has(body.local-eventbooking-view),
 html.centricapp-darkmode body.local-eventbooking-view,
 body.centricapp-darkmode.local-eventbooking-view {
-    background-color: #121418 !important;
-    background-image:
-        radial-gradient(920px 520px at 8% 0%, rgba(196, 200, 239, 0.16), transparent 62%),
-        radial-gradient(760px 460px at 100% 18%, rgba(43, 53, 143, 0.45), transparent 58%),
-        linear-gradient(180deg, rgba(18, 20, 24, 0.55), rgba(18, 20, 24, 0.82)),
-        url([[pix:local_eventbooking|backdrop]]) !important;
+    background-color: #141722 !important;
+    background-image: url([[pix:local_eventbooking|backdropdark]]) !important;
 }
 
 .local-eventbooking-page {
