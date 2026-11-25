@@ -48,10 +48,10 @@ class event_form extends \moodleform {
         $mform->addRule('name', null, 'required', null, 'client');
         $mform->addRule('name', get_string('maximumchars', '', 255), 'maxlength', 255);
 
-        $mform->addElement('editor', 'intro', get_string('description', 'local_eventbooking'), null, manager::editor_options(\context_system::instance()));
-        $mform->setType('intro', \PARAM_RAW);
-        $mform->addElement('editor', 'marketing', get_string('marketing', 'local_eventbooking'), null, manager::editor_options(\context_system::instance()));
-        $mform->setType('marketing', \PARAM_RAW);
+        $mform->addElement('editor', 'intro_editor', get_string('description', 'local_eventbooking'), null, manager::editor_options(\context_system::instance()));
+        $mform->setType('intro_editor', \PARAM_RAW);
+        $mform->addElement('editor', 'marketing_editor', get_string('marketing', 'local_eventbooking'), null, manager::editor_options(\context_system::instance()));
+        $mform->setType('marketing_editor', \PARAM_RAW);
         $mform->addHelpButton('marketing', 'marketing', 'local_eventbooking');
 
         $mform->addElement('filemanager', 'banner', get_string('banner', 'local_eventbooking'), null, manager::banner_options());
