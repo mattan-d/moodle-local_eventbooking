@@ -35,11 +35,15 @@ require_capability('local/eventbooking:view', $context);
 $id = required_param('id', PARAM_INT);
 $event = manager::require_event($id);
 $canmanage = has_capability('local/eventbooking:manage', $context);
+$preview = $canmanage && optional_param('preview', 0, PARAM_BOOL);
 if (!(int) $event->visible && !$canmanage) {
     throw new moodle_exception('eventnotavailable', 'local_eventbooking');
 }
 
 $url = new moodle_url('/local/eventbooking/view.php', ['id' => $id]);
+if ($preview) {
+    $url->param('preview', 1);
+}
 $PAGE->set_context($context);
 $PAGE->set_url($url);
 $PAGE->set_pagelayout('embedded');
@@ -55,11 +59,16 @@ $current = manager::get_active_registration($id, (int) $USER->id);
 $canregister = has_capability('local/eventbooking:register', $context);
 
 $action = optional_param('action', '', PARAM_ALPHA);
-if ($action === 'cancel' && confirm_sesskey() && data_submitted()) {
+if (!$preview && $action === 'cancel' && confirm_sesskey() && data_submitted()) {
     if (manager::cancel($id, (int) $USER->id)) {
         redirect($url, get_string('registrationcancelled', 'local_eventbooking'));
     }
     redirect($url, get_string('cancelnotallowed', 'local_eventbooking'), null, \core\output\notification::NOTIFY_ERROR);
+}
+
+// Preview shows a participant who has not registered, not the manager's own booking.
+if ($preview) {
+    $current = null;
 }
 
 $selectable = false;
@@ -72,7 +81,8 @@ foreach ($sessions as $session) {
         break;
     }
 }
-$showform = $canregister && (int) $event->visible && (int) $event->registrationopen && $sessions && $selectable;
+$visibletouser = $preview || (int) $event->visible;
+$showform = $canregister && $visibletouser && (int) $event->registrationopen && $sessions && $selectable;
 
 $form = null;
 if ($showform) {
@@ -102,6 +112,9 @@ if ($showform) {
     }
     $form->set_data($defaults);
     if ($data = $form->get_data()) {
+        if ($preview) {
+            redirect($url, get_string('previewnosave', 'local_eventbooking'), null, \core\output\notification::NOTIFY_INFO);
+        }
         $result = manager::register($id, (int) $data->sessionid, (array) $data);
         if ($result['ok']) {
             $message = $result['updated']
@@ -117,14 +130,30 @@ $renderer = $PAGE->get_renderer('local_eventbooking');
 echo $OUTPUT->header();
 echo html_writer::start_div('local-eventbooking-page');
 
-if ($canmanage) {
+if ($canmanage && !$preview) {
     echo $renderer->event_tabs($id, 'view');
-    echo $renderer->link_box($url->out(false));
+    echo $renderer->link_box((new moodle_url('/local/eventbooking/view.php', ['id' => $id]))->out(false));
     if (!(int) $event->visible) {
         echo $OUTPUT->notification(get_string('notvisiblewarning', 'local_eventbooking'), 'warning');
     } else if (!(int) $event->registrationopen) {
         echo $OUTPUT->notification(get_string('registrationnotopenwarning', 'local_eventbooking'), 'warning');
     }
+}
+
+if ($preview) {
+    $previewnote = get_string('userview', 'local_eventbooking');
+    if (!(int) $event->visible) {
+        $previewnote .= ' ' . get_string('previewhidden', 'local_eventbooking');
+    }
+    echo html_writer::div(
+        html_writer::span($previewnote, 'local-eventbooking-previewnote') .
+        html_writer::link(
+            new moodle_url('/local/eventbooking/view.php', ['id' => $id]),
+            get_string('previewback', 'local_eventbooking'),
+            ['class' => 'btn btn-sm btn-outline-primary']
+        ),
+        'local-eventbooking-previewbar'
+    );
 }
 
 echo $renderer->hero($event);
@@ -154,9 +183,9 @@ if ($showform) {
     echo html_writer::end_div();
     echo html_writer::end_div();
 } else if ($sessions) {
-    if ((int) $event->visible && !$current && !(int) $event->registrationopen) {
+    if ($visibletouser && !$current && !(int) $event->registrationopen) {
         echo $OUTPUT->notification(get_string('registrationclosed', 'local_eventbooking'), 'info');
-    } else if ((int) $event->visible && !$current && !$selectable) {
+    } else if ($visibletouser && !$current && !$selectable) {
         echo $OUTPUT->notification(get_string('eventfull', 'local_eventbooking'), 'warning');
     }
     echo html_writer::start_div('card local-eventbooking-sessionlist mb-3');

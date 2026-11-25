@@ -49,6 +49,11 @@ class renderer extends \plugin_renderer_base {
                 get_string('view', 'local_eventbooking')
             ),
             new tabobject(
+                'preview',
+                new \moodle_url('/local/eventbooking/view.php', ['id' => $eventid, 'preview' => 1]),
+                get_string('userview', 'local_eventbooking')
+            ),
+            new tabobject(
                 'edit',
                 new \moodle_url('/local/eventbooking/edit.php', ['id' => $eventid]),
                 get_string('edit', 'local_eventbooking')

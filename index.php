@@ -132,6 +132,8 @@ if (!$list['events']) {
         $actions = html_writer::div(
             html_writer::link(new moodle_url('/local/eventbooking/view.php', ['id' => $event['id']]),
                 get_string('view', 'local_eventbooking'), ['class' => 'btn btn-sm btn-outline-secondary']) .
+            html_writer::link(new moodle_url('/local/eventbooking/view.php', ['id' => $event['id'], 'preview' => 1]),
+                get_string('userview', 'local_eventbooking'), ['class' => 'btn btn-sm btn-outline-secondary']) .
             html_writer::link(new moodle_url('/local/eventbooking/edit.php', ['id' => $event['id']]),
                 get_string('edit', 'local_eventbooking'), ['class' => 'btn btn-sm btn-outline-secondary']) .
             html_writer::link(new moodle_url('/local/eventbooking/report.php', ['id' => $event['id']]),
