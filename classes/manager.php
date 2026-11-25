@@ -833,7 +833,7 @@ class manager {
                     $file->get_filename()
                 )->out(false),
                 'alt' => $file->get_filename(),
-                'logo' => $height > 0 && ($width / $height) >= 2.2,
+                'logo' => $height > 0 && $height <= 220 && $width > 0 && $width <= 800,
             ];
         }
         return $images;
@@ -905,6 +905,7 @@ class manager {
             'when' => self::hero_when($sessions),
             'haslocations' => !empty($locations),
             'locations' => array_map(static fn(string $name): array => ['name' => $name], $locations),
+            'hasfollow' => $marketing !== '' || !empty($gallery),
         ];
     }
 

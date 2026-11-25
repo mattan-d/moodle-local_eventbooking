@@ -1,43 +1,55 @@
-<div class="card local-eventbooking-hero mb-4">
+<section class="local-eventbooking-invite{{#banner}}{{#logo}} is-logo{{/logo}}{{^logo}} has-photo{{/logo}}{{/banner}}{{^banner}} is-plain{{/banner}}">
     {{#banner}}
-    <div class="local-eventbooking-bannerwrap{{#logo}} is-logo{{/logo}}">
-        <img class="local-eventbooking-banner" src="{{url}}" alt="{{alt}}">
-    </div>
+    {{^logo}}
+    <img class="local-eventbooking-invite-photo" src="{{url}}" alt="">
+    {{/logo}}
     {{/banner}}
-    <div class="card-body local-eventbooking-hero-body">
-        <div class="local-eventbooking-hero-heading">
-            <h1 class="local-eventbooking-title">{{name}}</h1>
-            <span class="local-eventbooking-hero-badge {{statusclass}}">{{badge}}</span>
-        </div>
+    <div class="local-eventbooking-invite-frame" aria-hidden="true"></div>
+    <div class="local-eventbooking-invite-inner">
+        {{#banner}}
+        {{#logo}}
+        <img class="local-eventbooking-invite-logo" src="{{url}}" alt="">
+        {{/logo}}
+        {{/banner}}
+        <span class="local-eventbooking-hero-badge {{statusclass}}">{{badge}}</span>
+        <span class="local-eventbooking-invite-rule" aria-hidden="true"></span>
+        <h1 class="local-eventbooking-invite-title">{{name}}</h1>
+        <span class="local-eventbooking-invite-rule" aria-hidden="true"></span>
         {{#when}}
-        <div class="local-eventbooking-hero-when">
-            <span class="local-eventbooking-choice-date">
-                <span class="local-eventbooking-choice-day">{{day}}</span>
-                <span class="local-eventbooking-choice-month">{{month}}</span>
-                {{#time}}<span class="local-eventbooking-choice-time" dir="ltr">{{time}}</span>{{/time}}
-            </span>
-            {{#until}}<span class="local-eventbooking-hero-until">{{until}}</span>{{/until}}
+        <div class="local-eventbooking-invite-when">
+            <span class="local-eventbooking-invite-day">{{day}}</span>
+            <span class="local-eventbooking-invite-month">{{month}}</span>
+            {{#time}}<span class="local-eventbooking-invite-time" dir="ltr">{{time}}</span>{{/time}}
+            {{#until}}<span class="local-eventbooking-invite-until">{{until}}</span>{{/until}}
         </div>
         {{/when}}
         {{#haslocations}}
-        <div class="local-eventbooking-locations">
+        <div class="local-eventbooking-invite-places">
             {{#locations}}
-            <span class="local-eventbooking-hero-place">{{name}}</span>
+            <span>{{name}}</span>
             {{/locations}}
         </div>
         {{/haslocations}}
-        {{#hasgallery}}
-        <div class="local-eventbooking-gallery">
-            {{#gallery}}
-            <img src="{{url}}" alt="{{alt}}">
-            {{/gallery}}
-        </div>
-        {{/hasgallery}}
         {{#intro}}
-        <div class="local-eventbooking-intro">{{{.}}}</div>
+        <div class="local-eventbooking-invite-intro">{{{.}}}</div>
         {{/intro}}
     </div>
-    {{#marketing}}
-    <div class="card-body border-top local-eventbooking-marketing">{{{.}}}</div>
-    {{/marketing}}
+</section>
+{{#hasfollow}}
+<div class="local-eventbooking-page local-eventbooking-follow">
+    <div class="card">
+        <div class="card-body">
+            {{#hasgallery}}
+            <div class="local-eventbooking-gallery">
+                {{#gallery}}
+                <img src="{{url}}" alt="{{alt}}">
+                {{/gallery}}
+            </div>
+            {{/hasgallery}}
+            {{#marketing}}
+            <div class="local-eventbooking-marketing">{{{.}}}</div>
+            {{/marketing}}
+        </div>
+    </div>
 </div>
+{{/hasfollow}}

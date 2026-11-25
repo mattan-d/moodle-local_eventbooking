@@ -128,9 +128,9 @@ if ($showform) {
 
 $renderer = $PAGE->get_renderer('local_eventbooking');
 echo $OUTPUT->header();
-echo html_writer::start_div('local-eventbooking-page');
 
 if ($canmanage && !$preview) {
+    echo html_writer::start_div('local-eventbooking-page local-eventbooking-chrome');
     echo $renderer->event_tabs($id, 'view');
     echo $renderer->link_box((new moodle_url('/local/eventbooking/view.php', ['id' => $id]))->out(false));
     if (!(int) $event->visible) {
@@ -138,6 +138,7 @@ if ($canmanage && !$preview) {
     } else if (!(int) $event->registrationopen) {
         echo $OUTPUT->notification(get_string('registrationnotopenwarning', 'local_eventbooking'), 'warning');
     }
+    echo html_writer::end_div();
 }
 
 if ($preview) {
@@ -152,11 +153,13 @@ if ($preview) {
             get_string('previewback', 'local_eventbooking'),
             ['class' => 'btn btn-sm btn-outline-primary']
         ),
-        'local-eventbooking-previewbar'
+        'local-eventbooking-page local-eventbooking-chrome local-eventbooking-previewbar'
     );
 }
 
 echo $renderer->hero($event);
+
+echo html_writer::start_div('local-eventbooking-page');
 
 if ($current) {
     $currentsession = null;
