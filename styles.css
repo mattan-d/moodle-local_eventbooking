@@ -22,18 +22,31 @@
 }
 
 .local-eventbooking-bannerwrap {
+    height: 13.5rem;
+    background: #e8eef6;
+    overflow: hidden;
+}
+
+.local-eventbooking-bannerwrap.is-logo {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1.25rem 1.5rem;
-    background: rgba(0, 48, 135, 0.04);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    height: auto;
+    padding: 1.15rem 1.25rem;
 }
 
 .local-eventbooking-banner {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.local-eventbooking-bannerwrap.is-logo .local-eventbooking-banner {
     width: auto;
-    max-width: 100%;
-    max-height: 120px;
+    height: auto;
+    max-width: min(100%, 28rem);
+    max-height: 7.5rem;
     object-fit: contain;
 }
 
@@ -141,28 +154,79 @@ body.centricapp-darkmode.local-eventbooking-view {
 }
 
 .local-eventbooking-title {
-    margin: 0 0 0.85rem;
-    font-size: 1.75rem;
-    font-weight: 700;
+    margin: 0;
+    font-size: 1.65rem;
+    font-weight: 800;
     line-height: 1.3;
 }
 
 .local-eventbooking-hero {
     overflow: hidden;
-    border-radius: 0.5rem;
-    box-shadow: 0 0.125rem 0.4rem rgba(0, 0, 0, 0.04);
+    border: 0;
+    border-radius: 1.1rem;
+    box-shadow: 0 0.75rem 2rem rgba(0, 48, 135, 0.1);
 }
 
-.local-eventbooking-meta,
+.local-eventbooking-hero-body {
+    padding: 1.15rem 1.3rem 1.25rem;
+}
+
+.local-eventbooking-hero-heading {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.55rem 0.75rem;
+}
+
+.local-eventbooking-hero-badge {
+    flex: 0 0 auto;
+    padding: 0.32rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(15, 122, 69, 0.12);
+    color: #0f7a45;
+    font-size: 0.78rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.local-eventbooking-hero-badge.is-muted {
+    background: rgba(92, 107, 122, 0.14);
+    color: #5c6b7a;
+}
+
+.local-eventbooking-hero-badge.is-closed {
+    background: rgba(180, 110, 0, 0.14);
+    color: #8a5a00;
+}
+
+.local-eventbooking-hero-when {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-top: 0.95rem;
+}
+
+.local-eventbooking-hero-until {
+    color: #3d4d63;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
 .local-eventbooking-locations {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.4rem;
+    margin-top: 0.9rem;
 }
 
-.local-eventbooking-locations {
-    margin-top: 0.75rem;
+.local-eventbooking-hero-place {
+    padding: 0.24rem 0.7rem;
+    border-radius: 999px;
+    background: #f4f7fb;
+    color: #3d4d63;
+    font-size: 0.8rem;
+    font-weight: 600;
 }
 
 .local-eventbooking-intro {
@@ -605,4 +669,20 @@ html.centricapp-darkmode .local-eventbooking-previewbar,
 body.centricapp-darkmode .local-eventbooking-previewbar {
     background: rgba(14, 17, 22, 0.92);
     color: #e8eaed;
+}
+
+html.centricapp-darkmode .local-eventbooking-bannerwrap,
+body.centricapp-darkmode .local-eventbooking-bannerwrap {
+    background: #161b22;
+}
+
+html.centricapp-darkmode .local-eventbooking-hero-place,
+body.centricapp-darkmode .local-eventbooking-hero-place {
+    background: rgba(255, 255, 255, 0.06);
+    color: #d5dbe3;
+}
+
+html.centricapp-darkmode .local-eventbooking-hero-until,
+body.centricapp-darkmode .local-eventbooking-hero-until {
+    color: #d5dbe3;
 }

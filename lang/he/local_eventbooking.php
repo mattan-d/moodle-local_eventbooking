@@ -78,6 +78,7 @@ $string['published'] = 'מפורסם';
 $string['hidden'] = 'טיוטה';
 $string['registrationopenstatus'] = 'הרשמה פתוחה';
 $string['registrationclosedstatus'] = 'הרשמה סגורה';
+$string['dateuntil'] = 'עד {$a}';
 $string['view'] = 'צפייה';
 $string['userview'] = 'תצוגת משתמש';
 $string['previewback'] = 'חזרה לניהול';

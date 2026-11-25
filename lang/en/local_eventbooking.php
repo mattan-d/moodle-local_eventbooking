@@ -78,6 +78,7 @@ $string['published'] = 'Published';
 $string['hidden'] = 'Draft';
 $string['registrationopenstatus'] = 'Registration open';
 $string['registrationclosedstatus'] = 'Registration closed';
+$string['dateuntil'] = 'Until {$a}';
 $string['view'] = 'View';
 $string['userview'] = 'Participant view';
 $string['previewback'] = 'Back to management';

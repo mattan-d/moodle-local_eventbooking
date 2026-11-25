@@ -820,6 +820,9 @@ class manager {
         );
         $images = [];
         foreach ($files as $file) {
+            $info = $file->get_imageinfo();
+            $width = is_array($info) ? (int) ($info['width'] ?? 0) : 0;
+            $height = is_array($info) ? (int) ($info['height'] ?? 0) : 0;
             $images[] = [
                 'url' => \moodle_url::make_pluginfile_url(
                     $context->id,
@@ -830,6 +833,7 @@ class manager {
                     $file->get_filename()
                 )->out(false),
                 'alt' => $file->get_filename(),
+                'logo' => $height > 0 && ($width / $height) >= 2.2,
             ];
         }
         return $images;
@@ -896,9 +900,81 @@ class manager {
             'marketing' => $marketing,
             'badge' => $summary['badge'],
             'badgeclass' => $summary['badgeclass'],
+            'statusclass' => self::hero_status_class($summary['badgeclass']),
             'dates' => $dates,
+            'when' => self::hero_when($sessions),
             'haslocations' => !empty($locations),
             'locations' => array_map(static fn(string $name): array => ['name' => $name], $locations),
+        ];
+    }
+
+    /**
+     * Visual state for the header status pill.
+     *
+     * @param string $badgeclass
+     * @return string
+     */
+    protected static function hero_status_class(string $badgeclass): string {
+        if (strpos($badgeclass, 'warning') !== false) {
+            return 'is-closed';
+        }
+        if (strpos($badgeclass, 'secondary') !== false) {
+            return 'is-muted';
+        }
+        return 'is-open';
+    }
+
+    /**
+     * Compact date for the event header.
+     *
+     * @param \stdClass[] $sessions
+     * @return array
+     */
+    protected static function hero_when(array $sessions): array {
+        $starts = [];
+        foreach ($sessions as $session) {
+            $start = (int) $session->timestart;
+            if ($start > 0) {
+                $starts[] = $start;
+            }
+        }
+        if (!$starts) {
+            return [];
+        }
+        $first = min($starts);
+        $last = max($starts);
+        $sameday = userdate($first, '%Y%m%d') === userdate($last, '%Y%m%d');
+        $samemonth = userdate($first, '%Y%m') === userdate($last, '%Y%m');
+        $day = userdate($first, '%d');
+        if (!$sameday && $samemonth) {
+            $day .= '–' . userdate($last, '%d');
+        }
+        $time = '';
+        if ($sameday) {
+            $end = 0;
+            foreach ($sessions as $session) {
+                if ((int) $session->timestart === $first) {
+                    $end = max($end, (int) ($session->timeend ?? 0));
+                }
+            }
+            $time = userdate($first, get_string('strftimetime', 'langconfig'));
+            if ($end > $first) {
+                $time .= '–' . userdate($end, get_string('strftimetime', 'langconfig'));
+            }
+        }
+        $until = '';
+        if (!$sameday && !$samemonth) {
+            $until = get_string(
+                'dateuntil',
+                'local_eventbooking',
+                userdate($last, '%d') . ' ' . userdate($last, '%b')
+            );
+        }
+        return [
+            'day' => $day,
+            'month' => userdate($first, '%b'),
+            'time' => $time,
+            'until' => $until,
         ];
     }
 
