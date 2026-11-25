@@ -465,38 +465,45 @@ class manager {
      * @return string
      */
     public static function session_choice_html(\stdClass $session, ?int $left, bool $open): string {
-        $when = self::format_range((int) $session->timestart, (int) ($session->timeend ?? 0));
+        $start = (int) $session->timestart;
+        $end = (int) ($session->timeend ?? 0);
         $name = trim($session->name ?? '');
         $location = trim($session->location ?? '');
 
         if (!$open) {
             $statustext = get_string('sessionclosed', 'local_eventbooking');
-            $statusclass = 'badge badge-secondary';
+            $statusclass = 'is-closed';
         } else if ($left === null) {
             $statustext = get_string('unlimited', 'local_eventbooking');
-            $statusclass = 'badge badge-light border';
+            $statusclass = 'is-unlimited';
         } else if ($left <= 0) {
             $statustext = get_string('full', 'local_eventbooking');
-            $statusclass = 'badge badge-danger';
+            $statusclass = 'is-full';
         } else {
             $statustext = get_string('seatsleft', 'local_eventbooking', $left);
-            $statusclass = 'badge badge-primary';
+            $statusclass = 'is-open';
         }
 
         $html = \html_writer::start_span('local-eventbooking-choice');
-        if ($name !== '' && $name !== $when) {
+        if ($start > 0) {
+            $time = userdate($start, get_string('strftimetime', 'langconfig'));
+            if ($end > $start) {
+                $time .= '–' . userdate($end, get_string('strftimetime', 'langconfig'));
+            }
+            $date = \html_writer::span(s(userdate($start, '%d')), 'local-eventbooking-choice-day');
+            $date .= \html_writer::span(s(userdate($start, '%b')), 'local-eventbooking-choice-month');
+            $date .= \html_writer::span(s($time), 'local-eventbooking-choice-time', ['dir' => 'ltr']);
+            $html .= \html_writer::span($date, 'local-eventbooking-choice-date');
+        }
+        $html .= \html_writer::start_span('local-eventbooking-choice-body');
+        if ($name !== '') {
             $html .= \html_writer::span(s($name), 'local-eventbooking-choice-name');
         }
-        $html .= \html_writer::tag('span', s($when), [
-            'class' => 'local-eventbooking-choice-when text-muted',
-            'dir' => 'ltr',
-        ]);
-        $html .= \html_writer::start_span('local-eventbooking-choice-meta');
         if ($location !== '') {
-            $html .= \html_writer::span(s($location), 'local-eventbooking-choice-location text-muted');
+            $html .= \html_writer::span(s($location), 'local-eventbooking-choice-location');
         }
-        $html .= \html_writer::span(s($statustext), $statusclass);
         $html .= \html_writer::end_span();
+        $html .= \html_writer::span(s($statustext), 'local-eventbooking-choice-status ' . $statusclass);
         $html .= \html_writer::end_span();
         return $html;
     }
