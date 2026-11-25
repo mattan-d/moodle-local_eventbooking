@@ -63,3 +63,12 @@ function local_eventbooking_pluginfile($course, $cm, $context, $filearea, $args,
 
     send_stored_file($file, 0, 0, $forcedownload, $options);
 }
+
+/**
+ * Add the events link on Moodle releases older than 4.4.
+ *
+ * @return void
+ */
+function local_eventbooking_before_http_headers() {
+    \local_eventbooking\hook_callbacks::extend_primary_navigation_legacy();
+}

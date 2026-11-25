@@ -24,9 +24,12 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$callbacks = [
-    [
+$callbacks = [];
+
+// The primary navigation hook exists from Moodle 4.4. Older sites use lib.php.
+if (class_exists(\core\hook\navigation\primary_extend::class)) {
+    $callbacks[] = [
         'hook' => \core\hook\navigation\primary_extend::class,
         'callback' => [\local_eventbooking\hook_callbacks::class, 'extend_primary_navigation'],
-    ],
-];
+    ];
+}

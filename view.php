@@ -44,7 +44,9 @@ $PAGE->set_context($context);
 $PAGE->set_url($url);
 $PAGE->set_pagelayout('embedded');
 $PAGE->add_body_class('local-eventbooking-view');
-$PAGE->activityheader->disable();
+if (isset($PAGE->activityheader) && method_exists($PAGE->activityheader, 'disable')) {
+    $PAGE->activityheader->disable();
+}
 $PAGE->set_title(format_string($event->name));
 $PAGE->set_heading('');
 
