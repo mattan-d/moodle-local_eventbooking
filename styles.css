@@ -58,21 +58,6 @@
     object-position: center;
 }
 
-.local-eventbooking-invite-frame {
-    position: absolute;
-    z-index: 2;
-    inset: 0.9rem;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    pointer-events: none;
-}
-
-.local-eventbooking-invite-frame::after {
-    content: "";
-    position: absolute;
-    inset: 0.38rem;
-    border: 1px solid rgba(255, 255, 255, 0.28);
-}
-
 .local-eventbooking-invite-inner {
     position: relative;
     z-index: 3;
