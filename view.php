@@ -83,16 +83,11 @@ if ($showform) {
         'userid' => $USER->id,
     ]);
     $defaults = (object) [
-        'firstname' => $current->firstname ?? $USER->firstname,
-        'lastname' => $current->lastname ?? $USER->lastname,
-        'email' => $current->email ?? $USER->email,
+        'firstname' => $USER->firstname,
+        'lastname' => $USER->lastname,
+        'email' => $USER->email,
         'phone' => $current->phone ?? ($USER->phone1 ?? ''),
-        'idnumber' => $current->idnumber ?? ($USER->idnumber ?? ''),
-        'institution' => $current->institution ?? ($USER->institution ?? ''),
-        'department' => $current->department ?? ($USER->department ?? ''),
-        'city' => $current->city ?? ($USER->city ?? ''),
-        'jobtitle' => $current->jobtitle ?? '',
-        'notes' => $current->notes ?? '',
+        'idnumber' => $USER->idnumber ?? '',
         'sessionid' => $current->sessionid ?? 0,
     ];
     if (empty($defaults->sessionid)) {

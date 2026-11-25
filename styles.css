@@ -176,12 +176,18 @@ body.centricapp-darkmode.local-eventbooking-view {
 }
 
 .local-eventbooking-page .mform > .local-eventbooking-section,
+.local-eventbooking-page .mform > .local-eventbooking-lockedhint,
 .local-eventbooking-page .mform > #fgroup_id_sessiongroup,
-.local-eventbooking-page .mform > #fitem_id_email,
-.local-eventbooking-page .mform > #fitem_id_notes,
+.local-eventbooking-page .mform > #fitem_id_phone,
 .local-eventbooking-page .mform > #fitem_id_submitbutton,
 .local-eventbooking-page .mform > .fdescription {
     grid-column: 1 / -1;
+}
+
+.local-eventbooking-lockedhint {
+    margin: -0.15rem 0 0.1rem;
+    color: #5c6b7a;
+    font-size: 0.86rem;
 }
 
 .local-eventbooking-page .mform > .fitem,
@@ -298,6 +304,21 @@ body.centricapp-darkmode.local-eventbooking-view {
     border-color: #003087;
     background: #fff;
     box-shadow: 0 0 0 3px rgba(0, 48, 135, 0.14);
+}
+
+.local-eventbooking-page .mform .form-control[readonly] {
+    background: #e7edf5;
+    color: #243044;
+    cursor: default;
+    border-color: rgba(0, 48, 135, 0.1);
+}
+
+.local-eventbooking-page .mform .form-control[readonly]:hover,
+.local-eventbooking-page .mform .form-control[readonly]:focus {
+    background: #e7edf5;
+    color: #243044;
+    border-color: rgba(0, 48, 135, 0.1);
+    box-shadow: none;
 }
 
 .local-eventbooking-page #fgroup_id_sessiongroup .felement .d-flex.flex-wrap {
@@ -443,4 +464,16 @@ body.centricapp-darkmode .local-eventbooking-page .mform .form-control {
     background: #0e1116 !important;
     border-color: #3a4250;
     color: #e8eaed;
+}
+
+html.centricapp-darkmode .local-eventbooking-page .mform .form-control[readonly],
+body.centricapp-darkmode .local-eventbooking-page .mform .form-control[readonly],
+html.centricapp-darkmode .local-eventbooking-page .mform .form-control[readonly]:hover,
+body.centricapp-darkmode .local-eventbooking-page .mform .form-control[readonly]:hover,
+html.centricapp-darkmode .local-eventbooking-page .mform .form-control[readonly]:focus,
+body.centricapp-darkmode .local-eventbooking-page .mform .form-control[readonly]:focus {
+    background: #161b22 !important;
+    color: #b7c0cc;
+    border-color: #2c3440;
+    box-shadow: none;
 }

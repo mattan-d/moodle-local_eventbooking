@@ -531,7 +531,7 @@ class manager {
         if (!has_capability('local/eventbooking:register', $context)) {
             return self::fail('cannotregister');
         }
-        if (!validate_email($details['email'] ?? '')) {
+        if (empty($USER->email) || !validate_email($USER->email)) {
             return self::fail('invalidemail');
         }
 
@@ -578,6 +578,7 @@ class manager {
             $record->timemodified = $now;
             $record->timecancelled = 0;
             if ($existing) {
+                self::keep_organisation($record, $existing);
                 $record->id = $existing->id;
                 $record->timecreated = $existing->timecreated;
                 $DB->update_record('local_eventbooking_reg', $record);
@@ -589,6 +590,7 @@ class manager {
                     'status' => self::STATUS_CANCELLED,
                 ], '*', \IGNORE_MULTIPLE);
                 if ($cancelled) {
+                    self::keep_organisation($record, $cancelled);
                     $record->id = $cancelled->id;
                     $record->timecreated = $cancelled->timecreated;
                     $DB->update_record('local_eventbooking_reg', $record);
@@ -638,17 +640,30 @@ class manager {
         $record->eventid = $eventid;
         $record->sessionid = $sessionid;
         $record->userid = $USER->id;
-        $record->firstname = \core_text::substr(trim($details['firstname'] ?? ''), 0, 100);
-        $record->lastname = \core_text::substr(trim($details['lastname'] ?? ''), 0, 100);
-        $record->email = \core_text::substr(trim($details['email'] ?? ''), 0, 100);
+        $record->firstname = \core_text::substr(trim($USER->firstname ?? ''), 0, 100);
+        $record->lastname = \core_text::substr(trim($USER->lastname ?? ''), 0, 100);
+        $record->email = \core_text::substr(trim($USER->email ?? ''), 0, 100);
         $record->phone = \core_text::substr(trim($details['phone'] ?? ''), 0, 30);
-        $record->idnumber = \core_text::substr(trim($details['idnumber'] ?? ''), 0, 255);
-        $record->institution = \core_text::substr(trim($details['institution'] ?? ''), 0, 255);
-        $record->department = \core_text::substr(trim($details['department'] ?? ''), 0, 255);
-        $record->city = \core_text::substr(trim($details['city'] ?? ''), 0, 120);
-        $record->jobtitle = \core_text::substr(trim($details['jobtitle'] ?? ''), 0, 255);
-        $record->notes = trim($details['notes'] ?? '');
+        $record->idnumber = \core_text::substr(trim($USER->idnumber ?? ''), 0, 255);
+        $record->institution = '';
+        $record->department = '';
+        $record->city = '';
+        $record->jobtitle = '';
+        $record->notes = '';
         return $record;
+    }
+
+    /**
+     * Keep organisation fields already stored when the form no longer collects them.
+     *
+     * @param \stdClass $record
+     * @param \stdClass $previous
+     * @return void
+     */
+    protected static function keep_organisation(\stdClass $record, \stdClass $previous): void {
+        foreach (['institution', 'department', 'city', 'jobtitle', 'notes'] as $field) {
+            $record->$field = $previous->$field;
+        }
     }
 
     /**

@@ -32,5 +32,8 @@ function xmldb_local_eventbooking_upgrade($oldversion) {
     if ($oldversion < 2026112500) {
         upgrade_plugin_savepoint(true, 2026112500, 'local', 'eventbooking');
     }
+    if ($oldversion < 2026112501) {
+        upgrade_plugin_savepoint(true, 2026112501, 'local', 'eventbooking');
+    }
     return true;
 }

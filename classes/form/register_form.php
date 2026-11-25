@@ -32,7 +32,7 @@ require_once($CFG->libdir . '/formslib.php');
 use local_eventbooking\manager;
 
 /**
- * Choose a date and confirm personal and organisational details.
+ * Choose a date and confirm the phone number. Name, ID and email come from the account.
  */
 class register_form extends \moodleform {
     /**
@@ -69,23 +69,15 @@ class register_form extends \moodleform {
         $mform->addGroup($radios, 'sessiongroup', '', '', false);
 
         $mform->addElement('html', $this->section_heading(get_string('personaldetails', 'local_eventbooking'), 2));
-        $this->add_text('firstname', get_string('firstname'), 'placeholderfirstname', true);
-        $this->add_text('lastname', get_string('lastname'), 'placeholderlastname', true);
-        $this->add_text('email', get_string('email'), 'placeholderemail', true, ['dir' => 'ltr']);
-        $mform->addRule('email', get_string('invalidemail', 'local_eventbooking'), 'email', null, 'client');
+        $mform->addElement('html', \html_writer::div(
+            get_string('profilelocked', 'local_eventbooking'),
+            'local-eventbooking-lockedhint'
+        ));
+        $this->add_text('firstname', get_string('firstname'), '', false, [], true);
+        $this->add_text('lastname', get_string('lastname'), '', false, [], true);
+        $this->add_text('idnumber', get_string('idnumber'), '', false, ['dir' => 'ltr'], true);
+        $this->add_text('email', get_string('email'), '', false, ['dir' => 'ltr'], true);
         $this->add_text('phone', get_string('phone', 'local_eventbooking'), 'placeholderphone', false, ['dir' => 'ltr']);
-        $this->add_text('idnumber', get_string('idnumber'), 'placeholderidnumber', false, ['dir' => 'ltr']);
-
-        $mform->addElement('html', $this->section_heading(get_string('organisationdetails', 'local_eventbooking'), 3));
-        $this->add_text('institution', get_string('institution', 'local_eventbooking'), 'placeholderinstitution');
-        $this->add_text('department', get_string('department', 'local_eventbooking'), 'placeholderdepartment');
-        $this->add_text('jobtitle', get_string('jobtitle', 'local_eventbooking'), 'placeholderjobtitle');
-        $this->add_text('city', get_string('city', 'local_eventbooking'), 'placeholdercity');
-        $mform->addElement('textarea', 'notes', get_string('notes', 'local_eventbooking'), [
-            'rows' => 3,
-            'placeholder' => get_string('placeholdernotes', 'local_eventbooking'),
-        ]);
-        $mform->setType('notes', \PARAM_TEXT);
 
         $label = $current
             ? get_string('updateregistration', 'local_eventbooking')
@@ -101,15 +93,23 @@ class register_form extends \moodleform {
      * @param string $placeholderkey
      * @param bool $required
      * @param array $extra
+     * @param bool $locked Value is shown but cannot be edited.
      */
     protected function add_text(
         string $name,
         string $label,
-        string $placeholderkey,
+        string $placeholderkey = '',
         bool $required = false,
-        array $extra = []
+        array $extra = [],
+        bool $locked = false
     ): void {
-        $attributes = ['size' => 40, 'placeholder' => get_string($placeholderkey, 'local_eventbooking')] + $extra;
+        $attributes = ['size' => 40] + $extra;
+        if ($placeholderkey !== '') {
+            $attributes['placeholder'] = get_string($placeholderkey, 'local_eventbooking');
+        }
+        if ($locked) {
+            $attributes['readonly'] = 'readonly';
+        }
         $this->_form->addElement('text', $name, $label, $attributes);
         $this->_form->setType($name, $name === 'email' ? \PARAM_RAW_TRIMMED : \PARAM_TEXT);
         if ($required) {
@@ -140,8 +140,9 @@ class register_form extends \moodleform {
      * @return array
      */
     public function validation($data, $files) {
+        global $USER;
         $errors = parent::validation($data, $files);
-        if (empty($data['email']) || !validate_email($data['email'])) {
+        if (empty($USER->email) || !validate_email($USER->email)) {
             $errors['email'] = get_string('invalidemail', 'local_eventbooking');
         }
 
