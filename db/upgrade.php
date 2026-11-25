@@ -59,5 +59,25 @@ function xmldb_local_eventbooking_upgrade($oldversion) {
     if ($oldversion < 2026112509) {
         upgrade_plugin_savepoint(true, 2026112509, 'local', 'eventbooking');
     }
+    if ($oldversion < 2026112510) {
+        global $DB;
+        $dbman = $DB->get_manager();
+        $table = new xmldb_table('local_eventbooking_reg');
+
+        $field = new xmldb_field('outlookeventid', XMLDB_TYPE_CHAR, '255', null, XMLDB_NOTNULL, null, '');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+        $field = new xmldb_field('outlookhash', XMLDB_TYPE_CHAR, '40', null, XMLDB_NOTNULL, null, '');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+        $field = new xmldb_field('outlookchecked', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        upgrade_plugin_savepoint(true, 2026112510, 'local', 'eventbooking');
+    }
     return true;
 }

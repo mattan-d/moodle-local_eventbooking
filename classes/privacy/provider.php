@@ -61,7 +61,14 @@ class provider implements
             'notes' => 'privacy:metadata:local_eventbooking_reg:notes',
             'status' => 'privacy:metadata:local_eventbooking_reg:status',
             'timecreated' => 'privacy:metadata:local_eventbooking_reg:timecreated',
+            'outlookeventid' => 'privacy:metadata:local_eventbooking_reg:outlookeventid',
         ], 'privacy:metadata:local_eventbooking_reg');
+
+        $collection->add_external_location_link('microsoft365', [
+            'email' => 'privacy:metadata:outlook:email',
+            'name' => 'privacy:metadata:outlook:name',
+            'session' => 'privacy:metadata:outlook:session',
+        ], 'privacy:metadata:outlook');
 
         $collection->add_database_table('local_eventbooking_sent', [
             'userid' => 'privacy:metadata:local_eventbooking_sent:userid',
@@ -130,6 +137,7 @@ class provider implements
                     'jobtitle' => $record->jobtitle,
                     'notes' => $record->notes,
                     'status' => $record->status,
+                    'outlookeventid' => $record->outlookeventid,
                     'timecreated' => transform::datetime($record->timecreated),
                     'timemodified' => transform::datetime($record->timemodified),
                 ];
@@ -230,6 +238,7 @@ class provider implements
      */
     protected static function delete_user(int $userid): void {
         global $DB;
+        \local_eventbooking\outlook::cancel_for_user($userid);
         $DB->delete_records('local_eventbooking_reg', ['userid' => $userid]);
         $DB->delete_records_select(
             'local_eventbooking_sent',

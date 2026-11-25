@@ -323,6 +323,7 @@ class manager {
      */
     public static function delete_event(int $eventid): void {
         global $DB;
+        outlook::cancel_outstanding($eventid);
         $context = \context_system::instance();
         $fs = get_file_storage();
         foreach (['banner', 'intro', 'marketing'] as $area) {
@@ -550,6 +551,7 @@ class manager {
 
         $updated = false;
         $committed = false;
+        $renew = false;
         $event = null;
         $session = null;
         try {
@@ -600,6 +602,7 @@ class manager {
                     self::keep_organisation($record, $cancelled);
                     $record->id = $cancelled->id;
                     $record->timecreated = $cancelled->timecreated;
+                    $renew = true;
                     $DB->update_record('local_eventbooking_reg', $record);
                 } else {
                     $record->timecreated = $now;
@@ -619,6 +622,7 @@ class manager {
 
         if ($committed && $event && $session) {
             self::send_confirmation($event, $session, $USER, $updated);
+            outlook::sync_registration($eventid, (int) $USER->id, $renew);
         }
         return ['ok' => true, 'updated' => $updated, 'message' => ''];
     }
@@ -691,19 +695,128 @@ class manager {
         if (!$lock) {
             return false;
         }
+        $released = false;
+        $outlookid = '';
+        $registrationid = 0;
         try {
             $existing = self::get_active_registration($eventid, $userid);
             if (!$existing) {
                 return false;
             }
+            $outlookid = trim((string) ($existing->outlookeventid ?? ''));
+            $registrationid = (int) $existing->id;
             $existing->status = self::STATUS_CANCELLED;
             $existing->timecancelled = time();
             $existing->timemodified = time();
             $DB->update_record('local_eventbooking_reg', $existing);
+            $released = true;
+            return true;
+        } finally {
+            $lock->release();
+            if ($released && $outlookid !== '') {
+                outlook::cancel_invite($outlookid, $registrationid);
+            }
+        }
+    }
+
+    /**
+     * Free a place because the employee declined the Outlook invitation.
+     *
+     * The meeting itself is left as declined. No second cancellation is sent.
+     *
+     * @param int $registrationid
+     * @return bool
+     */
+    public static function release_seat(int $registrationid): bool {
+        global $DB;
+        $record = $DB->get_record('local_eventbooking_reg', ['id' => $registrationid]);
+        if (!$record || (int) $record->status !== self::STATUS_CONFIRMED) {
+            return false;
+        }
+        $lockfactory = \core\lock\lock_config::get_lock_factory('local_eventbooking');
+        $lock = $lockfactory->get_lock('register_' . (int) $record->eventid, 5);
+        if (!$lock) {
+            return false;
+        }
+        try {
+            $record = $DB->get_record('local_eventbooking_reg', ['id' => $registrationid]);
+            if (!$record || (int) $record->status !== self::STATUS_CONFIRMED) {
+                return false;
+            }
+            $record->status = self::STATUS_CANCELLED;
+            $record->timecancelled = time();
+            $record->timemodified = time();
+            $record->outlookeventid = '';
+            $record->outlookhash = '';
+            $record->outlookchecked = time();
+            $DB->update_record('local_eventbooking_reg', $record);
             return true;
         } finally {
             $lock->release();
         }
+    }
+
+    /**
+     * Remember the Graph meeting for a registration that is still confirmed.
+     *
+     * @param int $registrationid
+     * @param string $graphid
+     * @param string $hash
+     * @return void
+     */
+    public static function store_outlook_event(int $registrationid, string $graphid, string $hash): void {
+        global $DB;
+        $graphid = \core_text::substr(trim($graphid), 0, 255);
+        $hash = \core_text::substr(trim($hash), 0, 40);
+        if ($graphid === '') {
+            return;
+        }
+        $DB->execute(
+            "UPDATE {local_eventbooking_reg}
+                SET outlookeventid = :graphid, outlookhash = :hash, outlookchecked = :checked
+              WHERE id = :id AND status = :status",
+            [
+                'graphid' => $graphid,
+                'hash' => $hash,
+                'checked' => time(),
+                'id' => $registrationid,
+                'status' => self::STATUS_CONFIRMED,
+            ]
+        );
+    }
+
+    /**
+     * Drop a stored meeting id after Graph has accepted the cancellation.
+     *
+     * @param int $registrationid
+     * @param string $graphid
+     * @return void
+     */
+    public static function clear_outlook_event(int $registrationid, string $graphid): void {
+        global $DB;
+        $DB->execute(
+            "UPDATE {local_eventbooking_reg}
+                SET outlookeventid = :empty, outlookhash = :hash, outlookchecked = :checked
+              WHERE id = :id AND outlookeventid = :graphid",
+            [
+                'empty' => '',
+                'hash' => '',
+                'checked' => time(),
+                'id' => $registrationid,
+                'graphid' => $graphid,
+            ]
+        );
+    }
+
+    /**
+     * Record that a response check was attempted, so the next run moves on.
+     *
+     * @param int $registrationid
+     * @return void
+     */
+    public static function mark_outlook_checked(int $registrationid): void {
+        global $DB;
+        $DB->set_field('local_eventbooking_reg', 'outlookchecked', time(), ['id' => $registrationid]);
     }
 
     /**

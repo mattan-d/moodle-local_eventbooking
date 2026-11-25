@@ -31,4 +31,57 @@ if ($hassiteconfig) {
         new moodle_url('/local/eventbooking/index.php'),
         'local/eventbooking:manage'
     ));
+
+    $settings = new admin_settingpage(
+        'local_eventbooking_outlook',
+        get_string('outlooksettings', 'local_eventbooking')
+    );
+    if ($ADMIN->fulltree) {
+        $settings->add(new admin_setting_heading(
+            'local_eventbooking/outlookheading',
+            get_string('outlookheading', 'local_eventbooking'),
+            get_string('outlookheading_desc', 'local_eventbooking')
+        ));
+        $settings->add(new admin_setting_configcheckbox(
+            'local_eventbooking/outlookenabled',
+            get_string('outlookenabled', 'local_eventbooking'),
+            get_string('outlookenabled_desc', 'local_eventbooking'),
+            0
+        ));
+        $settings->add(new admin_setting_configtext(
+            'local_eventbooking/outlooktenant',
+            get_string('outlooktenant', 'local_eventbooking'),
+            get_string('outlooktenant_desc', 'local_eventbooking'),
+            '',
+            PARAM_RAW_TRIMMED
+        ));
+        $settings->add(new admin_setting_configtext(
+            'local_eventbooking/outlookclientid',
+            get_string('outlookclientid', 'local_eventbooking'),
+            get_string('outlookclientid_desc', 'local_eventbooking'),
+            '',
+            PARAM_RAW_TRIMMED
+        ));
+        $settings->add(new admin_setting_configpasswordunmask(
+            'local_eventbooking/outlooksecret',
+            get_string('outlooksecret', 'local_eventbooking'),
+            get_string('outlooksecret_desc', 'local_eventbooking'),
+            ''
+        ));
+        $settings->add(new admin_setting_configtext(
+            'local_eventbooking/outlookorganizer',
+            get_string('outlookorganizer', 'local_eventbooking'),
+            get_string('outlookorganizer_desc', 'local_eventbooking'),
+            '',
+            PARAM_RAW_TRIMMED
+        ));
+        $settings->add(new admin_setting_configtext(
+            'local_eventbooking/outlookorganizername',
+            get_string('outlookorganizername', 'local_eventbooking'),
+            get_string('outlookorganizername_desc', 'local_eventbooking'),
+            '',
+            PARAM_TEXT
+        ));
+    }
+    $ADMIN->add('localplugins', $settings);
 }
