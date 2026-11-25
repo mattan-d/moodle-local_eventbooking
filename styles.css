@@ -23,7 +23,7 @@
 
 .local-eventbooking-bannerwrap {
     height: 13.5rem;
-    background: #e8eef6;
+    background: #eef0f8;
     overflow: hidden;
 }
 
@@ -92,7 +92,7 @@
     background: rgba(255, 255, 255, 0.92);
     color: #243044;
     font-size: 0.88rem;
-    box-shadow: 0 0.35rem 1rem rgba(0, 48, 135, 0.08);
+    box-shadow: 0 0.35rem 1rem rgba(43, 53, 143, 0.08);
 }
 
 .local-eventbooking-sessions .fitemlabel {
@@ -116,11 +116,11 @@
 html:has(body.local-eventbooking-view),
 body.local-eventbooking-view {
     min-height: 100%;
-    background-color: #d5e3f2 !important;
+    background-color: #e4e7f4 !important;
     background-image:
-        radial-gradient(920px 520px at 8% 0%, rgba(0, 48, 135, 0.18), transparent 62%),
-        radial-gradient(760px 460px at 100% 12%, rgba(79, 124, 255, 0.22), transparent 58%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(213, 227, 242, 0.35)),
+        radial-gradient(920px 520px at 8% 0%, rgba(43, 53, 143, 0.16), transparent 62%),
+        radial-gradient(760px 460px at 100% 12%, rgba(37, 116, 190, 0.16), transparent 58%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.35), rgba(228, 231, 244, 0.55)),
         url([[pix:local_eventbooking|backdrop]]) !important;
     background-position: center top !important;
     background-size: cover !important;
@@ -141,8 +141,8 @@ html.centricapp-darkmode body.local-eventbooking-view,
 body.centricapp-darkmode.local-eventbooking-view {
     background-color: #121418 !important;
     background-image:
-        radial-gradient(920px 520px at 8% 0%, rgba(158, 193, 255, 0.16), transparent 62%),
-        radial-gradient(760px 460px at 100% 18%, rgba(0, 48, 135, 0.45), transparent 58%),
+        radial-gradient(920px 520px at 8% 0%, rgba(196, 200, 239, 0.16), transparent 62%),
+        radial-gradient(760px 460px at 100% 18%, rgba(43, 53, 143, 0.45), transparent 58%),
         linear-gradient(180deg, rgba(18, 20, 24, 0.55), rgba(18, 20, 24, 0.82)),
         url([[pix:local_eventbooking|backdrop]]) !important;
 }
@@ -164,7 +164,7 @@ body.centricapp-darkmode.local-eventbooking-view {
     overflow: hidden;
     border: 0;
     border-radius: 1.1rem;
-    box-shadow: 0 0.75rem 2rem rgba(0, 48, 135, 0.1);
+    box-shadow: 0 0.75rem 2rem rgba(43, 53, 143, 0.1);
 }
 
 .local-eventbooking-hero-body {
@@ -223,7 +223,7 @@ body.centricapp-darkmode.local-eventbooking-view {
 .local-eventbooking-hero-place {
     padding: 0.24rem 0.7rem;
     border-radius: 999px;
-    background: #f4f7fb;
+    background: #f4f5fb;
     color: #3d4d63;
     font-size: 0.8rem;
     font-weight: 600;
@@ -240,7 +240,7 @@ body.centricapp-darkmode.local-eventbooking-view {
 .local-eventbooking-sessions.card {
     border: 0;
     border-radius: 1.1rem;
-    box-shadow: 0 0.75rem 2rem rgba(0, 48, 135, 0.1);
+    box-shadow: 0 0.75rem 2rem rgba(43, 53, 143, 0.1);
 }
 
 .local-eventbooking-sessions .card-body {
@@ -299,7 +299,7 @@ body.centricapp-darkmode.local-eventbooking-view {
     width: 1.7rem;
     height: 1.7rem;
     border-radius: 999px;
-    background: #003087;
+    background: #2b358f;
     color: #fff;
     font-size: 0.8rem;
     font-weight: 700;
@@ -322,7 +322,7 @@ body.centricapp-darkmode.local-eventbooking-view {
 
 .local-eventbooking-page .mform .form-label-addon .text-danger::after {
     content: "*";
-    color: #c23b3b;
+    color: #8a1f11;
     font-weight: 700;
     line-height: 1;
 }
@@ -356,9 +356,9 @@ body.centricapp-darkmode.local-eventbooking-view {
     width: 100%;
     max-width: none;
     min-height: 2.85rem;
-    border: 1px solid rgba(0, 48, 135, 0.16);
+    border: 1px solid rgba(43, 53, 143, 0.16);
     border-radius: 0.75rem;
-    background: #f5f8fc;
+    background: #f7f8fc;
     padding: 0.7rem 0.95rem;
     box-shadow: none;
     transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
@@ -374,28 +374,28 @@ body.centricapp-darkmode.local-eventbooking-view {
 }
 
 .local-eventbooking-page .mform .form-control:hover {
-    border-color: rgba(0, 48, 135, 0.35);
+    border-color: rgba(43, 53, 143, 0.35);
     background: #fff;
 }
 
 .local-eventbooking-page .mform .form-control:focus {
-    border-color: #003087;
+    border-color: #2b358f;
     background: #fff;
-    box-shadow: 0 0 0 3px rgba(0, 48, 135, 0.14);
+    box-shadow: 0 0 0 3px rgba(43, 53, 143, 0.14);
 }
 
 .local-eventbooking-page .mform .form-control[readonly] {
-    background: #e7edf5;
+    background: #eef0f7;
     color: #243044;
     cursor: default;
-    border-color: rgba(0, 48, 135, 0.1);
+    border-color: rgba(43, 53, 143, 0.1);
 }
 
 .local-eventbooking-page .mform .form-control[readonly]:hover,
 .local-eventbooking-page .mform .form-control[readonly]:focus {
-    background: #e7edf5;
+    background: #eef0f7;
     color: #243044;
-    border-color: rgba(0, 48, 135, 0.1);
+    border-color: rgba(43, 53, 143, 0.1);
     box-shadow: none;
 }
 
@@ -421,7 +421,7 @@ body.centricapp-darkmode.local-eventbooking-view {
     width: 100%;
     margin: 0;
     padding: 0.7rem 0.85rem;
-    border: 1px solid rgba(0, 48, 135, 0.14);
+    border: 1px solid rgba(43, 53, 143, 0.14);
     border-radius: 0.95rem;
     background: #fff;
     cursor: pointer;
@@ -430,14 +430,14 @@ body.centricapp-darkmode.local-eventbooking-view {
 }
 
 .local-eventbooking-page #fgroup_id_sessiongroup label.form-check-label:hover {
-    border-color: rgba(0, 48, 135, 0.4);
-    background: #f7faff;
+    border-color: rgba(43, 53, 143, 0.4);
+    background: #f6f7fc;
 }
 
 .local-eventbooking-page #fgroup_id_sessiongroup label.form-check-label:has(input:checked) {
-    border-color: #003087;
-    background: rgba(0, 48, 135, 0.06);
-    box-shadow: inset 0 0 0 1px #003087;
+    border-color: #2b358f;
+    background: rgba(43, 53, 143, 0.06);
+    box-shadow: inset 0 0 0 1px #2b358f;
 }
 
 .local-eventbooking-page #fgroup_id_sessiongroup label.form-check-label:has(input:disabled) {
@@ -452,13 +452,13 @@ body.centricapp-darkmode.local-eventbooking-view {
     height: 1.15rem;
     margin: 0;
     appearance: none;
-    border: 2px solid #003087;
+    border: 2px solid #2b358f;
     border-radius: 50%;
     background: #fff;
 }
 
 .local-eventbooking-page #fgroup_id_sessiongroup label.form-check-label:has(input:checked) .form-check-input {
-    background: #003087;
+    background: #2b358f;
     box-shadow: inset 0 0 0 3px #fff;
 }
 
@@ -479,8 +479,8 @@ body.centricapp-darkmode.local-eventbooking-view {
     min-width: 4.6rem;
     padding: 0.4rem 0.45rem 0.45rem;
     border-radius: 0.75rem;
-    background: rgba(0, 48, 135, 0.08);
-    color: #003087;
+    background: rgba(43, 53, 143, 0.08);
+    color: #2b358f;
     line-height: 1.05;
     text-align: center;
 }
@@ -513,7 +513,7 @@ body.centricapp-darkmode.local-eventbooking-view {
 /*rtl:end:ignore*/
 
 .local-eventbooking-page #fgroup_id_sessiongroup label.form-check-label:has(input:checked) .local-eventbooking-choice-date {
-    background: #003087;
+    background: #2b358f;
     color: #fff;
 }
 
@@ -543,8 +543,8 @@ body.centricapp-darkmode.local-eventbooking-view {
     margin-inline-start: auto;
     padding: 0.28rem 0.7rem;
     border-radius: 999px;
-    background: rgba(0, 48, 135, 0.1);
-    color: #003087;
+    background: rgba(43, 53, 143, 0.1);
+    color: #2b358f;
     font-size: 0.75rem;
     font-weight: 700;
     white-space: nowrap;
@@ -562,7 +562,7 @@ body.centricapp-darkmode.local-eventbooking-view {
 
 .local-eventbooking-choice-status.is-unlimited {
     background: transparent;
-    border: 1px solid rgba(0, 48, 135, 0.22);
+    border: 1px solid rgba(43, 53, 143, 0.22);
 }
 
 @media (max-width: 640px) {
@@ -585,15 +585,15 @@ body.centricapp-darkmode.local-eventbooking-view {
     margin-top: 0.35rem;
     border: 0;
     border-radius: 0.85rem;
-    background: #003087;
+    background: #2b358f;
     font-size: 1.05rem;
     font-weight: 700;
-    box-shadow: 0 0.55rem 1.2rem rgba(0, 48, 135, 0.24);
+    box-shadow: 0 0.55rem 1.2rem rgba(43, 53, 143, 0.24);
 }
 
 .local-eventbooking-page #fitem_id_submitbutton .btn-primary:hover,
 .local-eventbooking-page #fitem_id_submitbutton .btn-primary:focus {
-    background: #00256b;
+    background: #17206c;
 }
 
 .local-eventbooking-page .mform .fdescription.required {
@@ -618,20 +618,20 @@ body.centricapp-darkmode .local-eventbooking-page #fgroup_id_sessiongroup label.
 
 html.centricapp-darkmode .local-eventbooking-page #fgroup_id_sessiongroup label.form-check-label:has(input:checked),
 body.centricapp-darkmode .local-eventbooking-page #fgroup_id_sessiongroup label.form-check-label:has(input:checked) {
-    border-color: #9ec1ff;
+    border-color: #c4c8ef;
     background: rgba(158, 193, 255, 0.12);
-    box-shadow: inset 0 0 0 1px #9ec1ff;
+    box-shadow: inset 0 0 0 1px #c4c8ef;
 }
 
 html.centricapp-darkmode .local-eventbooking-choice-date,
 body.centricapp-darkmode .local-eventbooking-choice-date {
     background: rgba(158, 193, 255, 0.14);
-    color: #9ec1ff;
+    color: #c4c8ef;
 }
 
 html.centricapp-darkmode .local-eventbooking-page #fgroup_id_sessiongroup label.form-check-label:has(input:checked) .local-eventbooking-choice-date,
 body.centricapp-darkmode .local-eventbooking-page #fgroup_id_sessiongroup label.form-check-label:has(input:checked) .local-eventbooking-choice-date {
-    background: #9ec1ff;
+    background: #c4c8ef;
     color: #0e1116;
 }
 
@@ -643,7 +643,7 @@ body.centricapp-darkmode .local-eventbooking-choice-location {
 html.centricapp-darkmode .local-eventbooking-choice-status.is-open,
 body.centricapp-darkmode .local-eventbooking-choice-status.is-open {
     background: rgba(158, 193, 255, 0.16);
-    color: #9ec1ff;
+    color: #c4c8ef;
 }
 
 html.centricapp-darkmode .local-eventbooking-page .mform .form-control,
